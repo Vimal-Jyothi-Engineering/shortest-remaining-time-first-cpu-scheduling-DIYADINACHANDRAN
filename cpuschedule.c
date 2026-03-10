@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct process {
     char pid[10];
@@ -11,13 +13,12 @@ int main() {
 
     struct process p[20];
     int n = 0;
-
     char first[10];
 
     scanf("%s", first);
 
     if(isdigit(first[0])) {
-        n = first[0] - '0';
+        n = atoi(first);   // FIXED
 
         for(int i = 0; i < n; i++) {
             scanf("%s %d %d", p[i].pid, &p[i].at, &p[i].bt);
@@ -25,12 +26,12 @@ int main() {
         }
     } 
     else {
-        sscanf(first, "%s", p[0].pid);
+        strcpy(p[0].pid, first);   // FIXED
         scanf("%d %d", &p[0].at, &p[0].bt);
         p[0].rt = p[0].bt;
         n = 1;
 
-        while(scanf("%s %d %d", p[n].pid, &p[n].at, &p[n].bt) == 3) {
+        while(n < 20 && scanf("%s %d %d", p[n].pid, &p[n].at, &p[n].bt) == 3) {
             p[n].rt = p[n].bt;
             n++;
         }
